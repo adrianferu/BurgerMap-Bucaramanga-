@@ -27,7 +27,7 @@ def get_score_range(score):
     if score >= 4.5:
         result = '4.5-5.0'
     elif score >= 4.0 and score < 4.5:
-        result = '4.0-4.7'
+        result = '4.0-4.5'
     else:
         result = '< 4.0'
     return result
