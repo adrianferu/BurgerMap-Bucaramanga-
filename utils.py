@@ -2,10 +2,36 @@
 #--- The followinf packages are used for geospatial analysis
 import requests
 import json
+import pandas as pd
 
  # type: ignore
 
-def get_coord(Address,YOUR_API_KEY): 
+def read_instantDataScrapper(route):
+    '''
+    This function will read the csv file from the route and return a pandas dataframe.
+    The input is the route of the file.
+    The output is a pandas dataframe.
+    '''
+    df = pd.read_csv(route)
+    return df
+
+def read_GoogleMapsScrapper(route):
+    '''
+    This function will read the excel file from the route and return a pandas dataframe.
+    The input is the route of the file.
+    The output is a pandas dataframe.
+    '''
+    df = pd.read_excel(route)
+    return df
+
+
+def get_coord(Address,YOUR_API_KEY):
+    '''
+    This function will return the clean address, latitude and longitude of a given address.
+    The input is the address and the API key.
+    The output is a list with the clean address, latitude and longitude.
+    If the address is not found, the function will return ['NotFound','NA','NA']
+        ''' 
 
     api_url = f'https://maps.googleapis.com/maps/api/geocode/json?address={Address}&key={YOUR_API_KEY}'
     try:
@@ -19,11 +45,12 @@ def get_coord(Address,YOUR_API_KEY):
     return results 
 
 
-#We will create a function based on the score column. The syntax will be the following:
-#if score >= 4.5, then result will be '45.-5.0'
-#if score >=4.0 and <4.5, then result will be '4.0-4.5'
-#if score <4.0. then result will be '< 4.0'
 def get_score_range(score):
+    '''
+    This function will return the range of the score.
+    The input is the score.
+    The output is the range of the score.
+    '''
     if score >= 4.5:
         result = '4.5-5.0'
     elif score >= 4.0 and score < 4.5:
